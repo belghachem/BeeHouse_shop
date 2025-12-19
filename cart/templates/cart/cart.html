@@ -1,0 +1,39 @@
+{% block content %}
+<div class="cart-container">
+    <h1>Your Shopping Cart</h1>
+    
+    {% if cart_items %}
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.product.price }} DZD</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.get_total_price }} DZD</td>
+                    <td>
+                        <a href="{% url 'cart:remove_from_cart' item.id %}" class="btn-remove">Remove</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <div class="cart-summary">
+            <h3>Grand Total: {{ total }} DZD</h3>
+            <button class="checkout-btn">Proceed to Checkout</button>
+        </div>
+    {% else %}
+        <p>Your cart is empty. <a href="{% url 'products:product_page' %}">Go shopping!</a></p>
+    {% endif %}
+</div>
+{% endblock %}
